@@ -130,7 +130,75 @@ public class FlatFileReader {
 	}
 	
 	public ArrayList<Product> readProducts(){
-		return productList;
+		Scanner sc = null;
+
+		Product product = null;
+		
+		try {
+			sc = new Scanner(new File("data/Products.dat"));
+			sc.nextLine(); // reads the number of records from the first line	
+
+
+			while(sc.hasNext()) {
+				String line = sc.nextLine(); // reads each line starting from 2nd line
+				if(line.trim().length() > 0){
+
+
+					String data[] = line.split(";"); // tokenizes the line and stores in a String array 
+
+					// Stores the 4 array elements of each line into strings
+
+					String productCode = data[0];
+					String type = data[1];
+					
+					if(type.equals("P")) {
+						double parkingFee =  Double.parseDouble(data[2]);
+						product = new ParkingPass(productCode, type, parkingFee);
+					}
+					else if(type.equals("M")) {
+						String dateTime =  data[2];
+						String movieName = data[3];
+						String fullAddress = data[4];
+						String screenNo = data[5];
+						double pricePerUnit = Double.parseDouble(data[6]);
+						
+						String addressStr [] = fullAddress.split(",");
+						String street = addressStr[0];
+						String city = addressStr[1];
+						String state = addressStr[2];
+						String zip = addressStr[3];
+						String country = addressStr[4];
+
+						Address address = new Address(street,city,state,zip,country);
+						
+						product = new MovieTicket(productCode, type, dateTime, address,movieName, screenNo, pricePerUnit);
+					}
+					else if(type.equals("R")) {
+						String name = data[2];
+						double cost = Double.parseDouble(data[3]);
+						
+						product = new Refreshment(productCode, type, name, cost);
+					}
+					else if(type.equals("S")) {
+						String name = data[2];
+						String startDate = data[3];
+						String endDate = data[4];
+						double cost = Double.parseDouble(data[5]);
+						product = new SeasonPass(productCode, type, name, startDate, endDate, cost);
+					}
+					
+
+					// Adds the Product object into Person ArrayList
+					productList.add(product);
+				}
+			}
+			sc.close();
+			return productList;
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}	
 		
 	}
 
