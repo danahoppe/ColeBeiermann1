@@ -1,33 +1,51 @@
 
 public class  Person {
 
-	private int code;
+	private String personCode;
 	private String name;
-	private String address;
+	private Address address;
 	private String emailAddress;
 
-	public Person(int code, String name, String address, String emailAddress) {
-		this.code = code;
+	public Person(String personCode, String name, Address address, String emailAddress) {
+		this.personCode = personCode;
 		this.name = name;
 		this.address = address;
 		this.emailAddress = emailAddress;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
+	public String getPersonCode() {
+		return personCode;
 	}
 
-	public String getAddress() {
-		return address;
+	public void setPersonCode(String personCode) {
+		this.personCode = personCode;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getCode() {
-		return code;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	
 
 
 }
